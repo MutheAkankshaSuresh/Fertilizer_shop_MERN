@@ -1,0 +1,94 @@
+/* Home Page Styles */
+.hero {
+  background: linear-gradient(to right, #4CAF50, #2E7D32);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 25px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero .cta-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.featured-section {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featured-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c5f2d;
+  font-size: 28px;
+}
+
+.stats-section {
+  background-color: #e8f5e8;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.stats-section h3 {
+  color: #2c5f2d;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stat-item {
+  margin: 10px;
+  text-align: center;
+  flex: 1;
+  min-width: 150px;
+}
+
+.stat-item strong {
+  display: block;
+  font-size: 18px;
+  color: #4CAF50;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 15px;
+  }
+  
+  .hero h1 {
+    font-size: 28px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+  }
+  
+  .stats-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+}

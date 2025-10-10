@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f9f4;  /* Light green background */
+  color: #2c5f2d;  /* Dark green text */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Responsive design for mobile farmers */
+@media (max-width: 768px) {
+  body { font-size: 16px; }  /* Larger text for readability */
+}

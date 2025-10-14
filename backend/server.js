@@ -37,6 +37,8 @@ const productRoutes = require('./routes/products');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const cartRoutes = require('./routes/cart');
+const contactRoutes = require('./routes/contact');
+
 
 // Public / User routes
 app.use('/api/products', productRoutes);
@@ -50,6 +52,11 @@ app.use('/api/admin', auth, adminAuth, adminRoutes);
 const paymentRoutes = require('./routes/payment');
 app.use('/api/payment', paymentRoutes);
 
+
+// Contact form route (SMTP)
+app.use('/api/contact', contactRoutes);
+
+
 // 404 Handler
 app.use((req, res) => {
   res.status(404).json({ message: `Route ${req.originalUrl} not found` });
@@ -60,6 +67,10 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong on the server!' });
 });
+
+// Contact form route (SMTP)
+app.use('/api/contact', contactRoutes);
+
 
 // Start Server
 app.listen(PORT, () => {

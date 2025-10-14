@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Contact.css';  // Optional
+ import axios from 'axios';  // <-- Add this at the top
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
@@ -11,14 +13,24 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Integrate with backend (e.g., POST to /api/contact)
-    console.log('Contact form submitted:', formData);
-    setSubmitted(true);
-    // Reset form after 3s
-    setTimeout(() => setSubmitted(false), 3000);
-  };
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await axios.post('http://localhost:5000/api/contact', formData);
+
+    if (res.data.success) {
+      setSubmitted(true);
+    } else {
+      alert('Something went wrong: ' + res.data.message);
+    }
+  } catch (err) {
+    console.error('Failed to send contact message:', err);
+    alert('Failed to send message. Please try again later.');
+  }
+};
+
 
   if (submitted) {
     return (

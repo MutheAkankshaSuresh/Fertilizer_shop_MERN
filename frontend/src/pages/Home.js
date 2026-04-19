@@ -14,7 +14,13 @@ const Home = () => {
     // Fetch featured products (e.g., latest or in-stock from backend)
     axios.get('/api/products?sortBy=new&limit=6&stock=true')
       .then(response => {
-        setFeaturedProducts(response.data);
+        const data =
+          response.data?.products ||
+          response.data?.data ||
+          response.data ||
+          [];
+
+        setFeaturedProducts(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(err => {

@@ -2,6 +2,7 @@ import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "../api";
 
 const CheckoutPage = () => {
   const { cart, clearCart } = useCart();
@@ -13,7 +14,7 @@ const CheckoutPage = () => {
     try {
       // 1️⃣ Create order on backend
       const response = await axios.post(
-        "http://localhost:5000/api/payment/create-product-order",
+        apiUrl("/api/payment/create-product-order"),
         { productId: cart[0]?._id },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
@@ -41,7 +42,7 @@ const CheckoutPage = () => {
             };
 
             await axios.post(
-              "http://localhost:5000/api/payment/save",
+              apiUrl("/api/payment/save"),
               payload,
               { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );

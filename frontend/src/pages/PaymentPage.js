@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { apiUrl } from "../api";
 
 const PaymentPage = () => {
 
@@ -23,7 +24,7 @@ const PaymentPage = () => {
 
       // Create order
       const { data } = await axios.post(
-        "http://localhost:5000/api/payment/create-order",
+        apiUrl("/api/payment/create-order"),
         {},
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
@@ -47,7 +48,7 @@ const PaymentPage = () => {
             };
 
             await axios.post(
-              "http://localhost:5000/api/payment/save",
+              apiUrl("/api/payment/save"),
               payload,
               { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );

@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch featured products (e.g., latest or in-stock from backend)
-    axios.get('/api/products?sortBy=new&limit=6&stock=true')
+    axios.get(`${process.env.REACT_APP_API_URL}/api/products?sortBy=new&limit=6&stock=true`)
       .then(response => {
         const data =
           response.data?.products ||

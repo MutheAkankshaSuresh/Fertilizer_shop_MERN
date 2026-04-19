@@ -8,7 +8,7 @@ import { apiUrl } from '../api';
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
-  const { currentUser  } = useAuth();
+  const { currentUser } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -75,7 +75,7 @@ const handleSubmit = async (e) => {
               type="email"
               name="email"
               placeholder="Your Email"
-              value={formData.email || (currentUser  ? currentUser .email : '')}
+              value={formData.email || (currentUser ? currentUser.email : '')}
               onChange={handleChange}
               required
               style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '4px' }}
@@ -84,7 +84,7 @@ const handleSubmit = async (e) => {
               type="tel"
               name="phone"
               placeholder="Your Phone"
-              value={formData.phone || (currentUser  ? currentUser .phone : '')}
+              value={formData.phone || (currentUser ? currentUser.phone : '')}
               onChange={handleChange}
               style={{ padding: '10px', border: '1px solid #ddd', borderRadius: '4px' }}
             />

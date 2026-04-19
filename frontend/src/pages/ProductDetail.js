@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -13,19 +13,7 @@ const ProductDetail = () => {
   const [subscribed, setSubscribed] = useState(false);
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    if (id) {
-      fetchProduct();
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (product) {
-      fetchRelatedProducts();
-    }
-  }, [product]);
-
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
     try {
       const response = await axios.get(`/api/products/${id}`);
       setProduct(response.data);
@@ -35,9 +23,13 @@ const ProductDetail = () => {
       setLoading(false);
       console.error(err);
     }
-  };
+  }, [id]);
 
-  const fetchRelatedProducts = async () => {
+  const fetchRelatedProducts = useCallback(async () => {
+    if (!product) {
+      return;
+    }
+
     try {
       const response = await axios.get(
         `/api/products?category=${product.category || ''}&limit=4&exclude=${id}`
@@ -46,7 +38,19 @@ const ProductDetail = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [id, product]);
+
+  useEffect(() => {
+    if (id) {
+      fetchProduct();
+    }
+  }, [fetchProduct, id]);
+
+  useEffect(() => {
+    if (product) {
+      fetchRelatedProducts();
+    }
+  }, [fetchRelatedProducts, product]);
 
   const handleSubscribe = async () => {
     if (!currentUser) return alert('Please login to subscribe.');

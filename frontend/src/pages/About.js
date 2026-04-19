@@ -10,6 +10,7 @@ const About = () => {
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <h1 style={{ textAlign: 'center', color: '#2c5f2d', marginBottom: '30px' }}>About Shri Dattatrya Fertilizers</h1>
       
+      
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ color: '#4CAF50', textAlign: 'center' }}>Our Story</h2>
         <p style={{ fontSize: '18px', lineHeight: '1.6', textAlign: 'justify' }}>
@@ -44,7 +45,7 @@ const About = () => {
       <section style={{ textAlign: 'center' }}>
         {currentUser  ? (
           <p style={{ fontSize: '18px', marginBottom: '20px' }}>
-            Ready to get started, {currentUser .name}? Explore our range!
+            Ready to get started, {currentUser.name}? Explore our range!
           </p>
         ) : (
           <p style={{ fontSize: '18px', marginBottom: '20px' }}>

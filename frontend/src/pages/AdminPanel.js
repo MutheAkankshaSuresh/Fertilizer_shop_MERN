@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -6,7 +6,7 @@ import ProductCard from '../components/ProductCard';
 import '../styles/AdminPanel.css';  // Optional: Create for page-specific styles
 
 const AdminPanel = () => {
-  const { currentUser  } = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -21,37 +21,37 @@ const AdminPanel = () => {
   const [editingProduct, setEditingProduct] = useState(null);
 
   // Redirect if not logged in or not admin
+  const fetchData = useCallback(async () => {
+    try {
+      const [usersRes, productsRes, paymentsRes] = await Promise.all([
+        axios.get('/api/admin/users', {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        }),
+        axios.get('/api/admin/products', {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        }),
+        axios.get('/api/admin/payments', {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        })
+      ]);
+      setUsers(usersRes.data);
+      setProducts(productsRes.data);
+      setPayments(paymentsRes.data);
+      setLoading(false);
+    } catch (err) {
+      setError('Failed to load admin data');
+      setLoading(false);
+      console.error(err);
+    }
+  }, []);
+
   useEffect(() => {
-    if (!currentUser  || !currentUser .isAdmin) {
+    if (!currentUser || !currentUser.isAdmin) {
       navigate('/auth');
       return;
     }
     fetchData();
-  }, [currentUser , navigate]);
-
-const fetchData = async () => {
-  try {
-    const [usersRes, productsRes, paymentsRes] = await Promise.all([
-      axios.get('/api/admin/users', {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      }),
-      axios.get('/api/admin/products', {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      }),
-      axios.get('/api/admin/payments', {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      })
-    ]);
-    setUsers(usersRes.data);
-    setProducts(productsRes.data);
-    setPayments(paymentsRes.data);
-    setLoading(false);
-  } catch (err) {
-    setError('Failed to load admin data');
-    setLoading(false);
-    console.error(err);
-  }
-};
+  }, [currentUser, fetchData, navigate]);
 
 
   const handleNewProductChange = (e) => {
@@ -139,7 +139,7 @@ const fetchData = async () => {
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <h1 style={{ textAlign: 'center', color: '#2c5f2d', marginBottom: '30px' }}>Admin Panel - Shri Dattatrya Fertilizers</h1>
-      <p style={{ textAlign: 'center', color: '#666', marginBottom: '20px' }}>Welcome, Admin {currentUser .name}. Use the tabs below to manage the shop.</p>
+      <p style={{ textAlign: 'center', color: '#666', marginBottom: '20px' }}>Welcome, Admin {currentUser.name}. Use the tabs below to manage the shop.</p>
 
       {/* Tabs */}
       <div style={{ textAlign: 'center', marginBottom: '30px' }}>

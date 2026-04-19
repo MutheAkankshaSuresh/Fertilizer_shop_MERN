@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 import { useAuth } from '../context/AuthContext';
@@ -17,13 +17,9 @@ const Products = () => {
     sortBy: 'new'
   });
   const [searchTerm, setSearchTerm] = useState('');
-  const { currentUser  } = useAuth();
+  const { currentUser } = useAuth();
 
-  useEffect(() => {
-    fetchProducts();
-  }, [filters]);
-
-  const fetchProducts = () => {
+  const fetchProducts = useCallback(() => {
     let query = `/api/products?sortBy=${filters.sortBy}`;
     
     // Build query params for backend filters
@@ -50,7 +46,11 @@ const Products = () => {
         setLoading(false);
         console.error(err);
       });
-  };
+  }, [filters, searchTerm]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
@@ -132,9 +132,9 @@ const Products = () => {
         )}
       </div>
 
-      {currentUser  && (
+      {currentUser && (
         <p style={{ textAlign: 'center', marginTop: '20px', color: '#4CAF50' }}>
-          Logged in as {currentUser .name}. <Link to="/profile">Manage Your Profile & Subscriptions</Link>
+          Logged in as {currentUser.name}. <Link to="/profile">Manage Your Profile & Subscriptions</Link>
         </p>
       )}
     </div>

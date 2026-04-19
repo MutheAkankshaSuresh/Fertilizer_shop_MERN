@@ -8,7 +8,7 @@ const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { currentUser  } = useAuth();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     // Fetch featured products (e.g., latest or in-stock from backend)
@@ -36,8 +36,8 @@ const Home = () => {
         <a href="/products" className="cta-button" style={{ padding: '15px 30px', fontSize: '18px' }}>
           Explore Products
         </a>
-        {currentUser  && (
-          <p style={{ marginTop: '10px' }}>Welcome back, {currentUser .name}!</p>
+        {currentUser && (
+          <p style={{ marginTop: '10px' }}>Welcome back, {currentUser.name}!</p>
         )}
       </section>
 

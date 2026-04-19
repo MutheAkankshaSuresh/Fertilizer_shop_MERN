@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Auth.css';  // Optional
 
@@ -15,11 +14,11 @@ const Auth = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, register, currentUser  } = useAuth();
+  const { login, register, currentUser } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already logged in
-  if (currentUser ) {
+  if (currentUser) {
     navigate('/profile');
     return null;
   }
